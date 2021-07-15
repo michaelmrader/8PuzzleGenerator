@@ -13,6 +13,8 @@ public class Generator {
 	public Generator() {
 	}
 	
+	/* Call Function to Scramble Puzzle By Given Number of Moves*/
+	/* Will only make valid moves and never backtracks */
 	public void scramble(int numMoves) {
 		
 		for(int i = 0; i < numMoves; i++) {
@@ -21,10 +23,12 @@ public class Generator {
 		}
 	}
 	
+	/* Returns puzzle as a set of integers, puzzle is in row-major order */
 	public int[] getPuzzle() {
 		return currentState;
 	}
 	
+	/* Determine which moves can be made and avoid backtracking */
 	private void findValidMoves() {
 		int blankSpace = blankIndex(currentState);
 		int[] zeroPos = indexToPosition(blankSpace);
@@ -47,6 +51,7 @@ public class Generator {
 		}
 	}
 	
+	/* Determine where blank tile is in puzzle */
 	public int blankIndex(int[] problem) {
 		for (int i = 0; i < 9; i++) {
 			if (problem[i] == 0) {
@@ -56,6 +61,7 @@ public class Generator {
 		return -1;
 	}
 	
+	/* Get index position of blank tile */
 	private int[] indexToPosition(int index) {
 		int x;
 		int y;
@@ -64,11 +70,13 @@ public class Generator {
 		return(new int[] {x,y});
 	}
 	
+	/* Randomly choose a movement from the valid movements list */
 	private void randomlySelectMove() {
 		lastMove = validMoves.get(rand.nextInt(validMoves.size()));
 		swapTiles(lastMove);
 	}
 	
+	/* Swap tiles in the current puzzle */
 	private void swapTiles(expansionDirectionType move) {
 		int blankSpace = blankIndex(currentState);
 		switch(move) {
